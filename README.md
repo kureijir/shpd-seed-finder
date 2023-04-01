@@ -21,13 +21,14 @@ java -jar seed-finder.jar floors seed
 If al least 3 arguments are provided, the application will try to find a specific seed:
 
 ```
-java -jar seed-finder.jar floors condition item_list [output_file]
+java -jar seed-finder.jar floors condition item_list [output_file] [starting_seed]
 ```
 
 - **floors**: maximum depth to look for the items
 - **condition**: can be either `any` or `all`: the first will consider a seed valid if any of the specified items has been found, the second one requires _all_ of the items to spawn instead
 - **item_list**: file name containing a list of items, one item per line
 - **output_file**: file name to save the item list for each seed, if unspecified it will be set to `out.txt`
+- **starting_seed**: start searching from this seed, if unspecified it will be set to `0`
 
 The entries in the item list need to be in english, all lowercase and can optionally specify the enchantement and the upgrade level, so both `projecting crossbow +3` and `sword` are valid item names.
 
