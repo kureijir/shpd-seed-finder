@@ -79,18 +79,26 @@ public class SeedFinder {
 			Options.floors = Integer.parseInt(args[0]);
 			Options.seed = DungeonSeed.convertFromText(args[1]);
 
-			return;			
+			return;
 		}
 
 		Options.floors = Integer.parseInt(args[0]);
 		Options.condition = args[1].equals("any") ? Condition.ANY : Condition.ALL;
 		Options.itemListFile = args[2];
 
-		if (args.length < 4)
+		if (args.length < 4) {
 			Options.ouputFile = "out.txt";
-
-		else
+		}
+		else {
 			Options.ouputFile = args[3];
+		}
+
+		if (args.length < 5) {
+			Options.seed = 0L;
+		}
+		else {
+			Options.seed = DungeonSeed.convertFromText(args[4]);
+		}
 	}
 
 	private ArrayList<String> getItemList() {
@@ -172,12 +180,16 @@ public class SeedFinder {
 			e.printStackTrace();
 		}
 
-		for (int i = 0; i < DungeonSeed.TOTAL_SEEDS; i++) {
-			if (testSeed(Integer.toString(i), Options.floors)) {
-				System.out.printf("Found valid seed %s (%d)\n", DungeonSeed.convertToCode(Dungeon.seed), Dungeon.seed);
-				logSeedItems(Integer.toString(i), Options.floors);
+		for (long currentSeed = Options.seed; currentSeed < DungeonSeed.TOTAL_SEEDS; currentSeed++) {
+			System.out.printf("\rTesting seed %s (%d)... ", DungeonSeed.convertToCode(currentSeed), currentSeed);
+			if (testSeed(Long.toString(currentSeed), Options.floors)) {
+				System.out.print("Valid seed, proceeding to the next one\n");
+				logSeedItems(Long.toString(currentSeed), Options.floors);
+			} else {
+				System.out.printf("\r%-50s", " ");
 			}
 		}
+
 	}
 
 	private ArrayList<Heap> getMobDrops(Level l) {
