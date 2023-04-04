@@ -26,6 +26,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Imp;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Wandmaker;
 import com.shatteredpixel.shatteredpixeldungeon.items.Dewdrop;
 import com.shatteredpixel.shatteredpixeldungeon.items.EnergyCrystal;
+import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Gold;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -387,6 +388,16 @@ public class SeedFinder {
 
 			Dungeon.depth++;
 		}
+
+		out.print("Undiscovered Artifacts:\n");
+		while (true) {
+			Item i = Generator.random(Generator.Category.ARTIFACT);
+			if (i instanceof Ring) {
+				break;
+			}
+			out.printf("- %s\n", i.title().toLowerCase());
+		}
+		out.print("\n");
 
 		out.close();
     }
